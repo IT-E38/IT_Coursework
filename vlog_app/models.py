@@ -11,12 +11,15 @@ class UserProfile(models.Model):
 
 class Video(models.Model):
     title = models.CharField(max_length=30)
+    description = models.CharField(max_length=255)
     length = models.TimeField()
     Views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     tag = models.CharField(max_length=255)
     url = models.URLField()
     picture = models.ImageField(upload_to="video_picture")
+    release_date = models.DateField()
+    release_time = models.TimeField()
 
 
 class Manager(models.Model):
