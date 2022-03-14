@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>VLOG SYSTEM LOGIN PAGE</title>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all"/>
+    <!-- fontawesome v5-->
+    <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="signinform">
+    <h1>VLOG SYSTEM</h1>
+    <!-- container -->
+    <div class="container">
+        <!-- main content -->
+        <div class="w3l-form-info">
+            <div class="w3l_form">
+                <div class="left_grid_info">
+                    <img src="{% static 'images/image.svg' %}" alt=""/>
+                </div>
+            </div>
+            <div class="w3_info">
+                <h2>Sign In</h2>
+                <!-- todo: check the account and password. -->
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                        <input type="email" placeholder="Email or Username" required="">
+                    </div>
+                    <div class="input-group">
+                        <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                        <input type="Password" placeholder="Password" required="">
+                    </div>
+                    <div class="form-row bottom">
+                        <div class="form-check">
+                            <input type="checkbox" id="remenber" name="remenber" value="remenber">
+                            <label for="remenber"> Remember me?</label>
+                        </div>
+                        <a href="javascript:alert('Sorry, this function is temporarily unavailable.')" class="forgot">Forgot
+                            password?</a>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Sign In</button>
+                </form>
+                <p class="continue" style="margin-top: 50px;"><span>or Sign in with</span></p>
+                <p class="account">Don't have an account? <a href="/register/">Sign up</a></p>
+            </div>
+        </div>
+        <!-- //main content -->
+    </div>
+    <!-- //container -->
+    <!-- footer -->
+    <div class="footer">
+        <!-- <p>&copy; 2022 Play Sign In form. All Rights Reserved | Design by <a href="#" target="blank">W3layouts</a></p> -->
+    </div>
+    <!-- footer -->
+</div>
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+{% extends 'base_admin.html' %}
+{% block title_block %}User Manage Page{% endblock %}
+{% block content_block %}
+    <div class="input-div">
+        <div class="layui-form-item" style="margin-left: 60px;">
+            <div class="layui-inline" style="margin: 20px;">
+                <div class="layui-input-inline" style="width: 400px;">
+                    <input id="id_or_name" type="text" name="number" lay-verify="required|number" autocomplete="off"
+                           placeholder="Enter ID or name"
+                           class="layui-input" style="background: #f8f5f5;float: left;">
+                </div>
+                <button id="search-bt" type="button" class="layui-btn layui-btn-normal">SEARCH</button>
+                <button id="add-bt" type="button" class="layui-btn" style="margin-left: 350px;">+ ADD NEW USER</button>
+            </div>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <!-- th为表格标题栏-->
+                    <th>ID</th>
+                    <th>userphoto</th>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>email</th>
+                    <th>introduction</th>
+                    <th>date</th>
+                    <th>operate</th>
+                </tr>
+                {% for user_obj in user_objs %}
+                    <form id="form{{ forloop.counter }}" action="/update_user_page/" method="post" hidden>
+                        {% csrf_token %}
+                        <input name="id" value="{{ user_obj.id }}" hidden>
+                        <input name="userphoto" value="{{ user_obj.userphoto }}" hidden>
+                        <input name="username" value="{{ user_obj.username }}" hidden>
+                        <input name="password" value="{{ user_obj.password }}" hidden>
+                        <input name="email" value="{{ user_obj.email }}" hidden>
+                        <input name="introduction" value="{{ user_obj.introduction }}" hidden>
+                        <input name="date" value="{{ user_obj.date }}" hidden>
+                    </form>
+                    <tr>
+                        <td>{{ user_obj.id }}</td>
+                        {% load static %}
+                        <td><img src="{% static user_obj.userphoto %}" style="width: 100px;height: 100px;"></td>
+                        <td>{{ user_obj.username }}</td>
+                        <td>{{ user_obj.password }}</td>
+                        <td>{{ user_obj.email }}</td>
+                        <td>{{ user_obj.introduction }}</td>
+                        <td>{{ user_obj.date }}</td>
+                        <td>
+                            <div class="operate-div">
+                                <div class="edit"><a href="#" onclick="editUserInfo('form' + {{ forloop.counter }})">Edit</a></div>
+                                <div class="delete"><a href="#" onclick="deleteUser({{ user_obj.id }})">Delete</a></div>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8" style="font-size: 20px;color: gray;">There is no data here.</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block script_block %}
+    <script>
+        function editUserInfo(formId) {
+            document.getElementById(formId).submit();
+        }
+
+        function deleteUser(id) {
+            window.location.href = `/delete_user/${id}/`;
+        }
+        $(function () {
+            $('#search-bt').click(function () {
+                let id_or_name = $('#id_or_name').val();
+                if (id_or_name.trim() === '') return alert('input empty!');
+                else {
+                    $(window).attr('location', `/user_manage/${id_or_name}/`);
+                }
+            });
+            $('#add-bt').click(function () {
+                $(window).attr('location', `/user_add/`);
+            });
+        });
+    </script>
+    <style>
+        /*表格样式*/
+        table {
+            width: 90%;
+            background: #ccc;
+            margin: 10px auto;
+            border-collapse: collapse; /*border-collapse:collapse合并内外边距(去除表格单元格默认的2个像素内外边距*/
+            border-radius: 5px;
+        }
+
+        th, td {
+            height: 35px;
+            line-height: 25px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        th {
+            background: #eee;
+            font-weight: normal;
+        }
+
+        tr {
+            background: #fff;
+        }
+
+        tr:hover {
+            background: lightgray;
+        }
+
+        td a {
+            color: #06f;
+            text-decoration: none;
+            color: white;
+        }
+
+        td a:hover {
+            color: #06f;
+            text-decoration: underline;
+        }
+
+        .operate-div {
+            width: 110px;
+            text-align: center;
+            alignment: center;
+            margin-left: 10px;
+            margin-right: -57px;
+        }
+
+        .edit {
+            background: #009688;
+            width: 50px;
+            height: 25px;
+            float: left;
+            text-align: center;
+        }
+
+        .delete {
+            background: #FF5722;
+            width: 50px;
+            height: 25px;
+            text-align: center;
+            float: right;
+        }
+    </style>
+{% endblock %}

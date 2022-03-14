@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title_block %}Video Detail Page{% endblock %}
+{% block content_block %}
+    <div id="container" style="margin: 5px 15px 15px 15px;padding: 15px;">
+        <div style="width: 1060px; height: 500px;float: left;margin: 10px 10px 20px 10px;text-align: left">
+            <!-- todo: Replace src to video_obj.url -->
+            <video src="{{ MEDIA_URL }}video/nature.mp4"
+                   style="width: 100%;height: 100%;border-radius: 5px;transform: none;" controls></video>
+            {% load static %}
+            <div style="float: right;width: 85px;height: 35px;margin: 5px;">
+                <!-- todo: Determine whether the current user has liked the video to determine the src of the icon. -->
+                <img src="{% static 'images/like.png' %}" id="like" style="width: 35px;height: 35px;float: left;"
+                     alt="liked-icon">
+                <!-- todo: Replace 122k to video_obj.like_nums-->
+                <p style="margin: 12px;font-size: 15px;font-weight: bold;">122K</p>
+            </div>
+            <!-- todo: Replace the value in the following p label with the corresponding value in video_obj. -->
+            <p style="font-weight: bold;font-size: 20px;margin: 5px;">Video Name</p>
+            <p style="font-size: 16px;color: gray;margin: 5px;">The number of watchers: xxx, the video release date:
+                yyyy-MM-dd
+                HH:mm:ss</p>
+            <p style="font-size: 16px;color: black;margin: 5px;">The description of the video. The description of the
+                video. The
+                description of the video. The description of the video. The description of the video. The description of
+                the video.</p>
+        </div>
+    </div>
+{% endblock %}
+{% block script_block %}
+    <script>
+        $(function () {
+            let imgDom = $('#like');
+            imgDom.click(function () {
+                if (imgDom[0].src.search('liked') !== -1) {
+                    imgDom.attr('src', `{% static 'images/like.png' %}`);
+                } else {
+                    imgDom.attr('src', `{% static 'images/liked.png' %}`);
+                }
+                // todo: Update the number of likes of this video, and then return to the corresponding value of refresh.
+                // ....
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base_admin.html' %}
+{% block title_block %}User UPDATE Page{% endblock %}
+{% block content_block %}
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>UPDATE USER</legend>
+    </fieldset>
+
+    <form class="layui-form" method="post" action="/update_user_info/" lay-filter="example" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="layui-form-item">
+            <label class="layui-form-label">Username</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" lay-verify="title" autocomplete="off"
+                       placeholder="Please enter a username"
+                       class="layui-input" value="{{ user.username }}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Password</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" placeholder="Please enter a password" autocomplete="off"
+                       class="layui-input" value="{{ user.password }}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Email</label>
+            <div class="layui-input-block">
+                <input type="email" name="email" placeholder="Please enter a email" autocomplete="off"
+                       class="layui-input" value="{{ user.email }}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Introduction</label>
+            <div class="layui-input-block">
+                <input type="text" name="introduction" placeholder="Please enter a introduction" autocomplete="off"
+                       class="layui-input" value="{{ user.introduction }}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Date</label>
+            <div class="layui-input-inline">
+                <input type="text" name="date" value="{{ user.date }}" class="layui-input" id="test1-1" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Photo</label>
+            <div class="layui-input-block">
+                <input type="file" title="File" name="photo" placeholder="Please select a image file" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <input hidden name="userphoto" value="{{ user.userphoto }}">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block script_block %}
+    <script>
+        layui.use(['laydate', 'upload'], function () {
+            var laydate = layui.laydate, upload = layui.upload;
+            // date
+            laydate.render({
+                elem: '#test1-1'
+                , lang: 'en'
+            });
+        })
+    </script>
+{% endblock %}

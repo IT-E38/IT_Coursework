@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title_block %}Base{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'layui/css/layui.css' %}">
+    <style>
+        img:hover, video:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+    </style>
+    <script src="{% static 'layui/layui.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    {% block header_block %}
+        <div class="layui-header">
+            <div class="layui-logo layui-hide-xs layui-bg-black">SuperVlog</div>
+            <!-- 头部区域（可配合layui 已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <!-- 移动端显示 -->
+                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                    <i class="layui-icon layui-icon-spread-left"></i>
+                </li>
+
+                <li class="layui-nav-item" style="margin-left: 100px;float: left">
+                    <i class="layui-icon layui-icon-search" style="font-size: 20px; color: white;"></i>
+                    <div class="layui-input-inline" style="width: 900px;">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off"
+                               placeholder="Search your favourite video"
+                               class="layui-input">
+                    </div>
+
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                    <a href="/user_info/">
+                        {% load static %}
+                        <img src="{% static 'images/user.png' %}" class="layui-nav-img"
+                             style="background-color: white;">
+                        User
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">Your Profile</a></dd>
+                        <dd><a href="">Settings</a></dd>
+                        <dd><a href="">Sign out</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-more-vertical"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {% endblock %}
+    {% block side_block %}
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">Menu-1</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/home/">Home</a></dd>
+                            <dd><a href="javascript:;">Explore</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">Menu-2</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/video_list/hot/">Hot</a></dd>
+                            <dd><a href="/video_list/food/">Food</a></dd>
+                            <dd><a href="/video_list/travel/">Travel</a></dd>
+                            <dd><a href="/video_list/study/">Study</a></dd>
+                            <dd><a href="/video_list/sport/">Sport</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        {% block content_block %}
+
+        {% endblock %}
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        底部固定区域
+    </div>
+</div>
+{% block script_block %}
+    <script>
+        //JS
+        layui.use(['element', 'layer', 'util'], function () {
+            var element = layui.element
+                , layer = layui.layer
+                , util = layui.util
+                , $ = layui.$;
+
+            //头部事件
+            util.event('lay-header-event', {
+                //左侧菜单事件
+                menuLeft: function (othis) {
+                    layer.msg('展开左侧菜单的操作', {icon: 0});
+                }
+                , menuRight: function () {
+                    layer.open({
+                        type: 1
+                        , content: '<div style="padding: 15px;">处理右侧面板的操作</div>'
+                        , area: ['260px', '100%']
+                        , offset: 'rt' //右上角
+                        , anim: 5
+                        , shadeClose: true
+                    });
+                }
+            });
+
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

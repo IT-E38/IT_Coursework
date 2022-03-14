@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>VLOG SYSTEM REGISTER PAGE</title>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all"/>
+    <!-- fontawesome v5-->
+    <script src="https://kit.fontawesome.com/af562a2a63.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="signinform">
+    <h1>VLOG SYSTEM</h1>
+    <!-- container -->
+    <div class="container">
+        <!-- main content -->
+        <div class="w3l-form-info">
+            <div class="w3l_form">
+                <div class="left_grid_info">
+                    <img src="{% static 'images/image.svg' %}" alt=""/>
+                </div>
+            </div>
+            <div class="w3_info">
+                <h2>Register</h2>
+                <!-- todo: complete user register! -->
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                        <input type="text" placeholder="Username" required="">
+                    </div>
+                    <div class="input-group">
+                        <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                        <input type="password" placeholder="Password" required="">
+                    </div>
+                    <div class="input-group">
+                        <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                        <input type="password" placeholder="Confirm Password" required="">
+                    </div>
+                    <div class="input-group">
+                        <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                        <input type="email" placeholder="Email" required="">
+                    </div>
+                    <div class="input-group">
+                        <span style="color: gray;">Date of Birth: </span>
+                        <input style="border: none;" type="date" placeholder="Date of Birth" required="">
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Register</button>
+                </form>
+                <p class="account">Already have an account? <a href="/">Sign in</a></p>
+            </div>
+        </div>
+        <!-- //main content -->
+    </div>
+    <!-- //container -->
+    <!-- footer -->
+    <div class="footer">
+        <!-- <p>&copy; 2022 Play Sign In form. All Rights Reserved | Design by <a href="#" target="blank">W3layouts</a></p> -->
+    </div>
+    <!-- footer -->
+</div>
+</body>
+</html>

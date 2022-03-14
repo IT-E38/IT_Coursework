@@ -1,0 +1,92 @@
+{% extends 'base_admin.html' %}
+{% block title_block %}Admin Info Page{% endblock %}
+{% block content_block %}
+    <div id="container" style="margin: 60px;">
+        {% load static %}
+        <img src="{% static 'images/user.png' %}"
+             style="font-size: 200px; color: white;background-color: lightgray;float: left;margin-right: 90px;"
+             alt="user-image"/>
+        <div style="float: left">
+
+            <!-- todo: Replace the following information with the corresponding data information of the currently logged in admin. -->
+
+            <form id="form" method="post" action="/update_admin/">
+                {% csrf_token %}
+                <!-- todo: Replace the value in the following p label with the corresponding value in user. -->
+                <p style="font-weight: bold;font-size: 30px;padding-bottom: 20px;">
+                    USERNAME: <input id="username" name="username" value="{{ admin.username }}" style="border: none;"
+                                     readonly>
+                </p>
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    User Introduction: <input id="introduction" name="introduction" value="{{ admin.introduction }}"
+                                              style="border: none;"
+                                              readonly>
+                </p>
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    Date of Birth: <input id="date" name="date" type="date" value="{{ admin.date }}"
+                                          style="border: none;" readonly>
+                </p>
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    Email: <input id="email" name="email" value="{{ admin.email }}" style="border: none;" readonly>
+                </p>
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    Password: <input id="password" name="password" value="{{ admin.password }}" style="border: none;"
+                                     readonly>
+                </p>
+                <input id="submit" type="submit" hidden>
+            </form>
+
+        </div>
+        <div style="margin-right: 160px;float: right;padding-bottom: 20px;">
+            <p style="font-size: 25px;padding-bottom: 20px;">
+                <a id="username-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
+                   onclick="editInfo(this)">EDIT</a>
+            </p>
+            <p style="font-size: 25px;padding-bottom: 20px;">
+                <a id="introduction-a" href="javascript:void(0);"
+                   style="color: blue;text-decoration: underline;" onclick="editInfo(this);">EDIT</a>
+            </p>
+            <p style="font-size: 25px;padding-bottom: 20px;">
+                <a id="date-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
+                   onclick="editInfo(this);">EDIT</a>
+            </p>
+            <p style="font-size: 25px;padding-bottom: 20px;">
+                <a id="email-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
+                   onclick="editInfo(this);">EDIT</a>
+            </p>
+            <p style="font-size: 25px;padding-bottom: 20px;">
+                <a id="password-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
+                   onclick="editInfo(this);">EDIT</a>
+            </p>
+        </div>
+    </div><br><br>
+    <hr style="border: 10px solid;background-color: lightgray;height: 2px;margin-top: 50px;">
+{% endblock %}
+{% block script_block %}
+     <script>
+        // update user information.
+        function editInfo(obj) {
+            let mode = obj.text, target = obj.id.split('-')[0];
+            let input = document.getElementById(target);
+            if (mode === 'EDIT') { // EDIT Status
+                obj.value = input.value;
+                obj.text = 'COMPLETE';
+                input.readOnly = false;
+                input.style.border = '1px solid';
+            } else {
+                if (confirm("Are you sure you want to commit the changes?")) {
+                    document.getElementById('submit').click();
+                } else {
+                    input.value = obj.value;
+                }
+                input.readOnly = true;
+                input.style.border = 'none';
+                obj.text = 'EDIT';
+            }
+        }
+
+        $(function () {
+
+        });
+    </script>
+{% endblock %}

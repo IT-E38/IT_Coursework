@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title_block %}Home Page{% endblock %}
+{% block content_block %}
+    <div id="container" style="margin: 10px 25px 25px 25px;padding: 25px;">
+        {% for video in all_videos %}
+            <div style="width: 360px; height: 200px;float: left;margin: 20px 20px 40px 20px;text-align: center">
+                <!-- todo: Replace the 101 in the href to real video_id, the src of video to video.url -->
+                <a href="/video_detail/101/">
+                    <video src="{{ MEDIA_URL }}video/nature.mp4"
+                           style="width: 100%;height: 100%;border-radius: 5px;border: solid"></video>
+                </a>
+                <!-- todo: Replace the value in the following p label with the corresponding value in video_obj. -->
+                <p style="font-weight: bold">Video Name</p>
+                <p>56151 56456456 566</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block script_block %}
+{% endblock %}

@@ -1,0 +1,1 @@
+from vlog_app.models import UserProfile
