@@ -30,27 +30,27 @@
             <div class="w3_info">
                 <h2>Register</h2>
                 <!-- todo: complete user register! -->
-                <form action="#" method="post">
+                <form id="user_form" action="#" method="post">
                     {% csrf_token %}
                     <div class="input-group">
                         <span><i class="fas fa-user" aria-hidden="true"></i></span>
-                        <input type="text" placeholder="Username" required="">
+                         {{user_form.username}}
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                        <input type="password" placeholder="Password" required="">
+                        {{user_form.password1}}
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                        <input type="password" placeholder="Confirm Password" required="">
+                        {{user_form.password2}}
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                        <input type="email" placeholder="Email" required="">
+                        {{user_form.email}}
                     </div>
                     <div class="input-group">
                         <span style="color: gray;">Date of Birth: </span>
-                        <input style="border: none;" type="date" placeholder="Date of Birth" required="">
+                        {{profile_form.dob}}
                     </div>
                     <button class="btn btn-primary btn-block" type="submit">Register</button>
                 </form>

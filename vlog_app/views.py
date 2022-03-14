@@ -1,17 +1,22 @@
 import os
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,redirect,reverse
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from datetime import datetime
 
-from django.shortcuts import render, redirect
-
+from vlog_app.models import *
+from vlog_app.forms import *
 from django_pages_project import settings
 
 
-def index(request):
-    """
-    return to the index.html page view.
-    :param request:
-    :return:
-    """
-    return render(request, "index.html")
+# def index(request):
+#     """
+#     return to the index.html page view.
+#     :param request:
+#     :return:
+#     """
+#     return render(request, "index.html")
 
 
 def register(request):
@@ -20,7 +25,25 @@ def register(request):
     :param request:
     :return:
     """
-    return render(request, 'register.html')
+    if request.method == 'POST':
+        user_form = UserRegisterForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('home/')
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserRegisterForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+    return render(request, 'register.html', {'user_form':user_form,
+                                            'profile_form':profile_form,})
 
 
 def user_login(request):
@@ -30,20 +53,20 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        print(username)
         user = authenticate(username = username,password = password)
-        if user:
+        if user is not None:
             if user.is_active:
                 login(request,user)
-                return redirect(reverse('rango:index'))
+                return redirect('home')
             else:
-                return HttpResponse('Your Rango account is disabled')
+                return HttpResponse('Your VlogWeb account is disabled')
 
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'rango/login.html')
+        return render(request, 'index.html')
 
 
 def user_info(request):

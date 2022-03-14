@@ -5,7 +5,8 @@ from vlog_app import views
 app_name = 'vlog'
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.user_login),
+    path('login/', views.user_login),
     path('register/', views.register),
     path('user_info/', views.user_info),
     path('admin_info/', views.admin_info),
