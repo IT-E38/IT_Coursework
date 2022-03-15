@@ -12,7 +12,7 @@ class UserRegisterForm(forms.ModelForm):
                                },
                                widget = forms.TextInput(attrs={'placeholder': 'Username'})
                                )
-    password1 = forms.CharField(min_length=8, max_length=30,
+    password = forms.CharField(min_length=8, max_length=30,
                                 error_messages={
                                     'min_length': 'Password cannot be less than 8 characters',
                                     'max_length': 'Password cannot be more than 30 characters',
@@ -20,7 +20,7 @@ class UserRegisterForm(forms.ModelForm):
                                 },
                                 widget = forms.PasswordInput(attrs={'placeholder': 'Password'})
                                 )
-    password2 = forms.CharField(min_length=8, max_length=30,
+    password1 = forms.CharField(min_length=8, max_length=30,
                                 error_messages={
                                     'min_length': 'Password cannot be less than 8 characters',
                                     'max_length': 'Password cannot be more than 30 characters',
@@ -37,7 +37,7 @@ class UserRegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'email', )
+        fields = ('username', 'password', 'email', )
 
     error_messages = {'password_mismatch': '两次密码不一致', }
 

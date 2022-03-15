@@ -45,9 +45,8 @@
                         User
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">Your Profile</a></dd>
-                        <dd><a href="">Settings</a></dd>
-                        <dd><a href="">Sign out</a></dd>
+                        <dd><a href="/user_info/">Your Profile</a></dd>
+                        <dd><a href="{% url 'vlog:logout' %}">Sign out</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>

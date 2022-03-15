@@ -6,11 +6,12 @@ app_name = 'vlog'
 
 urlpatterns = [
     path('', views.user_login),
-    path('login/', views.user_login),
+    path('login/', views.user_login,name='login'),
+    path('logout/', views.user_logout, name='logout'),
     path('register/', views.register),
     path('user_info/', views.user_info),
     path('admin_info/', views.admin_info),
-    path('home/', views.home),
+    path('home/', views.home,name='home'),
     path('video_list/<video_type>/', views.video_list_result, name='video_list'),
     path('video_detail/<video_id>/', views.video_detail),
     path('user_manage/', views.user_manage),

@@ -18,20 +18,19 @@
                                      disabled>
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    User Introduction: <input id="introduction" name="introduction" value="{{ user.introduction }}"
+                    User Introduction: <input id="introduction" name="introduction" value="{{ user_profile.description }}"
                                               style="border: none;"
                                               disabled>
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    Date of Birth: <input id="date" name="date" type="date" value="{{ user.date }}"
-                                          style="border: none;" disabled>
+                    Date of Birth:
+                    {{ user_profile.dob }}
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
                     Email: <input id="email" name="email" value="{{ user.email }}" style="border: none;" disabled>
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    Password: <input id="password" name="password" value="{{ user.password }}" style="border: none;"
-                                     disabled>
+                    Password: *********
                 </p>
                 <input id="submit" type="submit" hidden>
             </form>

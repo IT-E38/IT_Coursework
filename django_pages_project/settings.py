@@ -134,3 +134,4 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 DATA_UPLOAD_MAX_MEMORY_SIZE = 31457280  # 单位为字节数
 
 APPEND_SLASH = False
+

@@ -4,11 +4,11 @@ from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
+from django.contrib.auth.hashers import check_password
 
 from vlog_app.models import *
 from vlog_app.forms import *
 from django_pages_project import settings
-
 
 # def index(request):
 #     """
@@ -36,7 +36,7 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            return redirect('home/')
+            return redirect(reverse('vlog:login'))
         else:
             print(user_form.errors)
     else:
@@ -53,16 +53,19 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username)
+        user = User.objects.get(username = username)
+        pwd = user.password
+        print(user.username,pwd)
+        print(bool(check_password(password,pwd)))
         user = authenticate(username = username,password = password)
         if user is not None:
             if user.is_active:
                 login(request,user)
-                return redirect('home')
+                return redirect(reverse('vlog:home'))
             else:
                 return HttpResponse('Your VlogWeb account is disabled')
-
         else:
+            print(user)
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
@@ -71,11 +74,17 @@ def user_login(request):
 
 def user_info(request):
     # todo: login user.
+    user = request.user
+    user_profile = UserProfile.objects.get(user = user)
+    info = {'username': user.username, 'introduction': 1, 'date': 1,
+            'email': user.email, 'password': 'xxxxxxxxxxxxxxxx'}
+    print(user_profile.dob)
+    return render(request, 'user_info.html', {'user': user,'user_profile':user_profile})
 
-    user = {'username': 'Tom Smith', 'introduction': 'A user from world.', 'date': '1999-01-01',
-            'email': 'xjjiofjiosjfiosjaio@email.com', 'password': 'xxxxxxxxxxxxxxxxx'}
-    return render(request, 'user_info.html', {'user': user})
 
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('vlog:login'))
 
 def admin_info(request):
     # todo: login admin.
