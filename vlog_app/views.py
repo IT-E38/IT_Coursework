@@ -6,24 +6,21 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 from django.contrib.auth.hashers import check_password
 
-from vlog_app.models import *
+from vlog_app.models import Tag,Video,UserProfile,User
 from vlog_app.forms import *
 from django_pages_project import settings
 
-# def index(request):
-#     """
-#     return to the index.html page view.
-#     :param request:
-#     :return:
-#     """
-#     return render(request, "index.html")
+
+"""
+
+User Module
+
+"""
 
 
 def register(request):
     """
-    return to the register.html page view.
-    :param request:
-    :return:
+    For User Register
     """
     if request.method == 'POST':
         user_form = UserRegisterForm(request.POST)
@@ -71,18 +68,23 @@ def user_login(request):
     else:
         return render(request, 'index.html')
 
+
 @login_required
 def user_info(request):
-    # todo: login user.
+    """
+    For User information display
+    """
     user = request.user
     user_profile = UserProfile.objects.get(user = user)
-    # info = {'username': user.username, 'introduction': 1, 'date': 1,
-    #         'email': user.email, 'password': 'xxxxxxxxxxxxxxxx'}
     print(user_profile.dob)
     return render(request, 'user_info.html', {'user': user,'user_profile':user_profile})
 
 
+@login_required
 def user_info_edit(request):
+    """
+    For User information edit
+    """
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
     if request.method == 'POST':
@@ -103,9 +105,39 @@ def user_info_edit(request):
     return render(request, 'user_info_edit.html', {'form': form})
 
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('vlog:login'))
+
+
+"""
+
+Video module
+
+"""
+
+
+def home(request):
+    all_videos =  Video.objects.all
+    return render(request, 'home.html', {'all_videos': all_videos})
+
+
+def video_list_result(request, tag_id):
+    video_list = Video.objects.filter(tag = tag_id)
+    return render(request, 'video_list_result.html', {'video_list': video_list})
+
+
+def video_detail(request, video_id):
+    video = Video.objects.filter(id = video_id)
+    return render(request, 'video_detail.html', {'video': video})
+
+
+"""
+
+Admin module
+
+"""
 
 def admin_info(request):
     # todo: login admin.
@@ -115,24 +147,6 @@ def admin_info(request):
     return render(request, 'admin_info.html', {'admin': admin})
 
 
-def home(request):
-    # todo: Query all video from the database, then put them on the 'all_videos' list.
-
-    return render(request, 'home.html', {'all_videos': [x for x in range(9)]})
-
-
-def video_list_result(request, video_type):
-    print('video_type:', video_type)
-    # todo: Query videos by video type from the database, then put them on the 'video_list'
-
-    return render(request, 'video_list_result.html', {'video_list': [x for x in range(10)]})
-
-
-def video_detail(request, video_id):
-    print('video_id:', video_id)
-    # todo: Query videos by video id from the database, then pass video object to HTML page.
-
-    return render(request, 'video_detail.html', {'video': 'video_object'})
 
 
 def user_manage(request):

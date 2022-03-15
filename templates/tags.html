@@ -1,0 +1,13 @@
+<ul>
+{% if tags %}
+    {% for tag in tags %}
+        {% if tag == current_tag %}
+        <dd><li><strong><a href="/video_list/{{ tag.id }}/">{{ tag.name }}</a></strong></li></dd>
+        {% else %}
+        <dd><li><a href="/video_list/{{ tag.id }}/">{{ tag.name }}</a></li></dd>
+        {% endif %}
+    {% endfor %}
+{%else%}
+    <li><strong>No tags</strong></li>
+{%endif%}
+</ul>

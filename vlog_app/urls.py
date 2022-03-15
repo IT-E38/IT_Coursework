@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.contrib import admin
 from vlog_app import views
 
 app_name = 'vlog'
@@ -8,12 +8,12 @@ urlpatterns = [
     path('', views.user_login),
     path('login/', views.user_login,name='login'),
     path('logout/', views.user_logout, name='logout'),
-    path('register/', views.register),
+    path('register/', views.register,name = 'register'),
     path('user_info/', views.user_info,name = 'user_info'),
     path('user_info_edit/', views.user_info_edit,name='user_info_edit'),
     path('admin_info/', views.admin_info),
-    path('home/', views.home,name='home'),
-    path('video_list/<video_type>/', views.video_list_result, name='video_list'),
+    path('home/', views.home,name = 'home'),
+    path('video_list/<tag_id>/', views.video_list_result, name='video_list'),
     path('video_detail/<video_id>/', views.video_detail),
     path('user_manage/', views.user_manage),
     path('user_manage/<id_or_name>/', views.user_manage_query, name='user_manage'),

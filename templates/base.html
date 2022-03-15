@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+{% load vlog_template_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -63,20 +65,17 @@
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">Menu-1</a>
+                        <a class="" href="javascript:;">Welcome</a>
                         <dl class="layui-nav-child">
                             <dd><a href="/home/">Home</a></dd>
-                            <dd><a href="javascript:;">Explore</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">Menu-2</a>
+                        <a class="" href="javascript:;">Categories</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="/video_list/hot/">Hot</a></dd>
-                            <dd><a href="/video_list/food/">Food</a></dd>
-                            <dd><a href="/video_list/travel/">Travel</a></dd>
-                            <dd><a href="/video_list/study/">Study</a></dd>
-                            <dd><a href="/video_list/sport/">Sport</a></dd>
+                             {% block sidebar_block %}
+                                {% get_tags_list  tag%}
+                            {% endblock %}
                         </dl>
                     </li>
                 </ul>

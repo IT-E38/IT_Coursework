@@ -21,7 +21,7 @@ from django.urls import path
 from django_pages_project import views, settings
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     url(r'^', include('vlog_app.urls', namespace='vlog')),
     path('', views.base),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
