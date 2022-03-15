@@ -49,6 +49,30 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('dob',)
 
+class ProfileEditForm(forms.ModelForm):
+    # nickname = forms.CharField(min_length=1,max_length=20,required=False,
+    #                            error_messages={
+    #                                'min_length': '昵称至少4个字符',
+    #                                'min_length': '昵称不能多于20个字符',
+    #                            },
+    #                            widget=forms.TextInput())
+    # avatar = forms.ImageField(required=False, validators=[avatar_file_size],
+    #                           widget=forms.FileInput(attrs={'class' : 'n'}))
+    email = forms.EmailField(required=False,
+                             error_messages={
+                                 'invalid': 'please enter the valid mail address',
+                             },
+                             widget = forms.EmailInput(attrs={'placeholder': 'Email address'})
+                             )
+    dob = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date'})
+                          )
+    description= forms.CharField(
+                               widget=forms.TextInput(attrs={'placeholder': 'description'})
+                               )
+
+    class Meta:
+        model = UserProfile
+        fields = [ 'email', 'dob', 'description']
 
 
 

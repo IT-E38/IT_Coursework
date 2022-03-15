@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title_block %}User Info Page{% endblock %}
+{% block content_block %}
+    <div id="container" style="margin: 60px;">
+        {% load static %}
+        <div style="float: left">
+
+
+
+
+            <form id="form" method="post" action="">
+                {% csrf_token %}
+
+
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    User Introduction: {{ form.description }}
+                </p>
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    Date of Birth:{{ form.dob }}
+                </p>
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                    Email:{{ form.email }}
+                </p>
+                <input id="submit" type="submit" >
+            </form>
+
+        </div>
+
+    </div><br><br>
+    <hr style="border: 10px solid;background-color: lightgray;height: 2px;margin-top: 50px;">
+{% endblock %}

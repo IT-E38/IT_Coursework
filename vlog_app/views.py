@@ -71,15 +71,36 @@ def user_login(request):
     else:
         return render(request, 'index.html')
 
-
+@login_required
 def user_info(request):
     # todo: login user.
     user = request.user
     user_profile = UserProfile.objects.get(user = user)
-    info = {'username': user.username, 'introduction': 1, 'date': 1,
-            'email': user.email, 'password': 'xxxxxxxxxxxxxxxx'}
+    # info = {'username': user.username, 'introduction': 1, 'date': 1,
+    #         'email': user.email, 'password': 'xxxxxxxxxxxxxxxx'}
     print(user_profile.dob)
     return render(request, 'user_info.html', {'user': user,'user_profile':user_profile})
+
+
+def user_info_edit(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST)
+
+        if form.is_valid():
+            user_profile.dob = form.cleaned_data['dob']
+            user_profile.description = form.cleaned_data['description']
+            user.email = form.cleaned_data['email']
+            user.save()
+            user_profile.save()
+            return redirect(reverse('vlog:user_info'))
+
+        else:
+            print(form.errors)
+    else:
+        form = ProfileEditForm(request.POST)
+    return render(request, 'user_info_edit.html', {'form': form})
 
 
 def user_logout(request):

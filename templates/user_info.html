@@ -33,12 +33,13 @@
                     Password: *********
                 </p>
                 <input id="submit" type="submit" hidden>
+                 <a href="{% url 'vlog:user_info_edit' %}">Edit information</a></li>
             </form>
 
         </div>
         <div style="margin-right: 160px;float: right;padding-bottom: 20px;">
             <p style="font-size: 25px;padding-bottom: 20px;">
-                <a id="username-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
+                <a id="username-a" href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;"
                    onclick="editInfo(this)">EDIT</a>
             </p>
             <p style="font-size: 25px;padding-bottom: 20px;">
