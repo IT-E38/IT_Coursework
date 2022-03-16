@@ -29,11 +29,9 @@
                 <p style="font-size: 25px;padding-bottom: 20px;">
                     Email: <input id="email" name="email" value="{{ user.email }}" style="border: none;" disabled>
                 </p>
-                <p style="font-size: 25px;padding-bottom: 20px;">
-                    Password: *********
-                </p>
                 <input id="submit" type="submit" hidden>
                  <a href="{% url 'vlog:user_info_edit' %}">Edit information</a></li>
+                 <a href="{% url 'vlog:change_password' %}">Change password</a></li>
             </form>
 
         </div>
@@ -52,10 +50,6 @@
             </p>
             <p style="font-size: 25px;padding-bottom: 20px;">
                 <a id="email-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
-                   onclick="editInfo(this);">EDIT</a>
-            </p>
-            <p style="font-size: 25px;padding-bottom: 20px;">
-                <a id="password-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
                    onclick="editInfo(this);">EDIT</a>
             </p>
         </div>

@@ -75,4 +75,25 @@ class ProfileEditForm(forms.ModelForm):
         fields = [ 'email', 'dob', 'description']
 
 
+class PasswordEditForm(forms.ModelForm):
+    password = forms.CharField(min_length=8, max_length=30,
+                                error_messages={
+                                    'min_length': 'Password cannot be less than 8 characters',
+                                    'max_length': 'Password cannot be more than 30 characters',
+                                    'required': 'Cannot be empty',
+                                },
+                                widget = forms.PasswordInput(attrs={'placeholder': 'Initial Password'})
+                                )
+    password1 = forms.CharField(min_length=8, max_length=30,
+                                error_messages={
+                                    'min_length': 'Password cannot be less than 8 characters',
+                                    'max_length': 'Password cannot be more than 30 characters',
+                                    'required': 'Cannot be empty',
+                                },
+                                widget = forms.PasswordInput(attrs={'placeholder': 'New Password'})
+                                )
+
+    class Meta:
+        model = User
+        fields = ('password',)
 

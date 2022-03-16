@@ -53,6 +53,7 @@ def user_login(request):
         user = User.objects.get(username = username)
         pwd = user.password
         print(user.username,pwd)
+        print(password)
         print(bool(check_password(password,pwd)))
         user = authenticate(username = username,password = password)
         if user is not None:
@@ -67,6 +68,12 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'index.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('vlog:login'))
 
 
 @login_required
@@ -106,9 +113,32 @@ def user_info_edit(request):
 
 
 @login_required
-def user_logout(request):
-    logout(request)
-    return redirect(reverse('vlog:login'))
+def change_password(request):
+    """
+    For User password change
+    """
+    user = request.user
+    if request.method == 'POST':
+        form = PasswordEditForm(request.POST)
+        if form.is_valid():
+            initial_pwd = form.cleaned_data['password']
+            new_pwd = form.cleaned_data['password1']
+            print(initial_pwd)
+            print(new_pwd)
+            user = authenticate(username=user.username, password=initial_pwd)
+            if user:
+                user.set_password(new_pwd)
+                user.save()
+                return redirect(reverse('vlog:user_info'))
+            else:
+                return HttpResponse("invalid initial Password .")
+        else:
+            print(form.errors)
+    else:
+        form = PasswordEditForm(request.POST)
+    return render(request, 'change_password.html', {'form': form,'user':user})
+
+
 
 
 """
@@ -120,7 +150,8 @@ Video module
 
 def home(request):
     all_videos =  Video.objects.all
-    return render(request, 'home.html', {'all_videos': all_videos})
+    user = request.user
+    return render(request, 'home.html', {'all_videos': all_videos,'user':user})
 
 
 def video_list_result(request, tag_id):

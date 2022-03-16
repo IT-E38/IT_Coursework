@@ -43,19 +43,25 @@
                     <a href="/user_info/">
                         {% load static %}
                         <img src="{% static 'images/user.png' %}" class="layui-nav-img"
-                             style="background-color: white;">
-                        User
+                             style="background-color: white;">user
+                                    <ul>
+            {% if user.is_authenticated %}
+            {{ user.username }}
+            {% else %}
+            user
+            {% endif %}
+            </ul>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="/user_info/">Your Profile</a></dd>
                         <dd><a href="{% url 'vlog:logout' %}">Sign out</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
-                    <a href="javascript:;">
-                        <i class="layui-icon layui-icon-more-vertical"></i>
-                    </a>
-                </li>
+{#                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>#}
+{#                    <a href="javascript:;">#}
+{#                        <i class="layui-icon layui-icon-more-vertical"></i>#}
+{#                    </a>#}
+{#                </li>#}
             </ul>
         </div>
     {% endblock %}
@@ -92,7 +98,6 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        底部固定区域
     </div>
 </div>
 {% block script_block %}
