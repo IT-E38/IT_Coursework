@@ -18,28 +18,26 @@
                                      disabled>
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    User Introduction: <input id="introduction" name="introduction" value="{{ user.introduction }}"
+                    User Introduction: <input id="introduction" name="introduction" value="{{ user_profile.description }}"
                                               style="border: none;"
                                               disabled>
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    Date of Birth: <input id="date" name="date" type="date" value="{{ user.date }}"
-                                          style="border: none;" disabled>
+                    Date of Birth:
+                    {{ user_profile.dob }}
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
                     Email: <input id="email" name="email" value="{{ user.email }}" style="border: none;" disabled>
                 </p>
-                <p style="font-size: 25px;padding-bottom: 20px;">
-                    Password: <input id="password" name="password" value="{{ user.password }}" style="border: none;"
-                                     disabled>
-                </p>
                 <input id="submit" type="submit" hidden>
+                 <a href="{% url 'vlog:user_info_edit' %}">Edit information</a></li>
+                 <a href="{% url 'vlog:change_password' %}">Change password</a></li>
             </form>
 
         </div>
         <div style="margin-right: 160px;float: right;padding-bottom: 20px;">
             <p style="font-size: 25px;padding-bottom: 20px;">
-                <a id="username-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
+                <a id="username-a" href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;"
                    onclick="editInfo(this)">EDIT</a>
             </p>
             <p style="font-size: 25px;padding-bottom: 20px;">
@@ -52,10 +50,6 @@
             </p>
             <p style="font-size: 25px;padding-bottom: 20px;">
                 <a id="email-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
-                   onclick="editInfo(this);">EDIT</a>
-            </p>
-            <p style="font-size: 25px;padding-bottom: 20px;">
-                <a id="password-a" href="javascript:void(0);" style="color: blue;text-decoration: underline;"
                    onclick="editInfo(this);">EDIT</a>
             </p>
         </div>

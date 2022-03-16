@@ -5,25 +5,42 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
-    dob = models.DateField()
-    description = models.CharField(max_length=255, blank=True)
+    dob = models.DateTimeField()
+    description = models.CharField(max_length=255, blank=True,null=True)
+
+    def __str__(self):
+     return self.user.username
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    # slug = models.SlugField(blank=True)
+    #
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.name)
+    #     super(Tag, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 
 class Video(models.Model):
     title = models.CharField(max_length=30)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255,blank=True,null=True)
     length = models.TimeField()
-    Views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0,blank=True)
     likes = models.IntegerField(default=0)
-    tag = models.CharField(max_length=255)
-    url = models.URLField()
-    picture = models.ImageField(upload_to="video_picture")
-    release_date = models.DateField()
-    release_time = models.TimeField()
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='video/',null=True)
+    picture = models.ImageField(upload_to="video_picture/")
+    release_date = models.DateTimeField(auto_now_add=True, blank=True, max_length=20)
 
+    def increase_view_count(self):
+        self.views += 1
+        self.save(update_fields=['views'])
 
-class Manager(models.Model):
-    manager = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(blank=True)
-    dob = models.DateField()
-    description = models.CharField(max_length=255, blank=True)
+# class Manager(models.Model):
+#     manager = models.OneToOneField(User, on_delete=models.CASCADE)
+#     email = models.EmailField(blank=True)
+#     dob = models.DateField()
+#     description = models.CharField(max_length=255, blank=True)

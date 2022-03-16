@@ -5,15 +5,16 @@
         {% for video in video_list %}
             <div style=";">
                 <div style="width: 550px;float:left;height: 300px;margin: 10px 80px 20px 10px;">
-                    <a style="" href="/video_detail/101/">
-                        <video src="{{ MEDIA_URL }}video/nature.mp4"
-                               style="width: 100%;height: 100%;border-radius: 2px;border: solid; float: left"></video>
+                    <a style="" href="/video_detail/{{ video.id }}/">
+                    <img src="/media/{{ video.picture }} "alt="Picture of Video"
+                           style="width: 100%;height: 100%;border-radius: 5px;border: solid"></img>
                     </a>
                 </div>
                 <div style="padding-top: 20px;">
-                    <p style="font-weight: bold">Video Name</p><br>
-                    <p>56151 56456456 566</p><br>
-                    <p>fosaofjasjjfl;jasop o jowsifoiosa ioaj</p>
+                    <p style="font-weight: bold">{{ video.title }}</p><br>
+                    <p>{{ video.length }}</p><br>
+                    <p>{{ video.release_date }}</p><br>
+                    <p>{{ video.description }}</p>
                 </div>
                 <hr style="background: lightgray;border: 2px solid;height: 2px;">
             </div>

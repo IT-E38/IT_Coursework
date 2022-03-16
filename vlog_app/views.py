@@ -1,35 +1,174 @@
 import os
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,redirect,reverse
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from datetime import datetime
+from django.contrib.auth.hashers import check_password
 
-from django.shortcuts import render, redirect
-
+from vlog_app.models import Tag,Video,UserProfile,User
+from vlog_app.forms import *
 from django_pages_project import settings
 
 
-def index(request):
-    """
-    return to the index.html page view.
-    :param request:
-    :return:
-    """
-    return render(request, "index.html")
+"""
+
+User Module
+
+"""
 
 
 def register(request):
     """
-    return to the register.html page view.
-    :param request:
-    :return:
+    For User Register
     """
-    return render(request, 'register.html')
+    if request.method == 'POST':
+        user_form = UserRegisterForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect(reverse('vlog:login'))
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserRegisterForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+    return render(request, 'register.html', {'user_form':user_form,
+                                            'profile_form':profile_form,})
 
 
+def user_login(request):
+    """
+    For User Login
+    """
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = User.objects.get(username = username)
+        pwd = user.password
+        print(user.username,pwd)
+        print(password)
+        print(bool(check_password(password,pwd)))
+        user = authenticate(username = username,password = password)
+        if user is not None:
+            if user.is_active:
+                login(request,user)
+                return redirect(reverse('vlog:home'))
+            else:
+                return HttpResponse('Your VlogWeb account is disabled')
+        else:
+            print(user)
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'index.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('vlog:login'))
+
+
+@login_required
 def user_info(request):
-    # todo: login user.
+    """
+    For User information display
+    """
+    user = request.user
+    user_profile = UserProfile.objects.get(user = user)
+    print(user_profile.dob)
+    return render(request, 'user_info.html', {'user': user,'user_profile':user_profile})
 
-    user = {'username': 'Tom Smith', 'introduction': 'A user from world.', 'date': '1999-01-01',
-            'email': 'xjjiofjiosjfiosjaio@email.com', 'password': 'xxxxxxxxxxxxxxxxx'}
-    return render(request, 'user_info.html', {'user': user})
 
+@login_required
+def user_info_edit(request):
+    """
+    For User information edit
+    """
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST)
+
+        if form.is_valid():
+            user_profile.dob = form.cleaned_data['dob']
+            user_profile.description = form.cleaned_data['description']
+            user.email = form.cleaned_data['email']
+            user.save()
+            user_profile.save()
+            return redirect(reverse('vlog:user_info'))
+
+        else:
+            print(form.errors)
+    else:
+        form = ProfileEditForm(request.POST)
+    return render(request, 'user_info_edit.html', {'form': form})
+
+
+@login_required
+def change_password(request):
+    """
+    For User password change
+    """
+    user = request.user
+    if request.method == 'POST':
+        form = PasswordEditForm(request.POST)
+        if form.is_valid():
+            initial_pwd = form.cleaned_data['password']
+            new_pwd = form.cleaned_data['password1']
+            print(initial_pwd)
+            print(new_pwd)
+            user = authenticate(username=user.username, password=initial_pwd)
+            if user:
+                user.set_password(new_pwd)
+                user.save()
+                return redirect(reverse('vlog:user_info'))
+            else:
+                return HttpResponse("invalid initial Password .")
+        else:
+            print(form.errors)
+    else:
+        form = PasswordEditForm(request.POST)
+    return render(request, 'change_password.html', {'form': form,'user':user})
+
+
+
+
+"""
+
+Video module
+
+"""
+
+
+def home(request):
+    all_videos =  Video.objects.all
+    user = request.user
+    return render(request, 'home.html', {'all_videos': all_videos,'user':user})
+
+
+def video_list_result(request, tag_id):
+    video_list = Video.objects.filter(tag = tag_id)
+    return render(request, 'video_list_result.html', {'video_list': video_list})
+
+
+def video_detail(request, video_id):
+    video = Video.objects.filter(id = video_id)
+    return render(request, 'video_detail.html', {'video': video})
+
+
+"""
+
+Admin module
+
+"""
 
 def admin_info(request):
     # todo: login admin.
@@ -39,24 +178,6 @@ def admin_info(request):
     return render(request, 'admin_info.html', {'admin': admin})
 
 
-def home(request):
-    # todo: Query all video from the database, then put them on the 'all_videos' list.
-
-    return render(request, 'home.html', {'all_videos': [x for x in range(9)]})
-
-
-def video_list_result(request, video_type):
-    print('video_type:', video_type)
-    # todo: Query videos by video type from the database, then put them on the 'video_list'
-
-    return render(request, 'video_list_result.html', {'video_list': [x for x in range(10)]})
-
-
-def video_detail(request, video_id):
-    print('video_id:', video_id)
-    # todo: Query videos by video id from the database, then pass video object to HTML page.
-
-    return render(request, 'video_detail.html', {'video': 'video_object'})
 
 
 def user_manage(request):

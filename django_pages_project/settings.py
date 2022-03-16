@@ -29,13 +29,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'vlog_app'
+    'vlog_app',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,5 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 DATA_UPLOAD_MAX_MEMORY_SIZE = 31457280  # 单位为字节数
 
 APPEND_SLASH = False
+
+LOGIN_URL = 'vlog:login'  # redirect the un-login user to the login site
