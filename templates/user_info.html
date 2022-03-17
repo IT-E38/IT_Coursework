@@ -30,8 +30,12 @@
                     Email: <input id="email" name="email" value="{{ user.email }}" style="border: none;" disabled>
                 </p>
                 <input id="submit" type="submit" hidden>
-                 <a href="{% url 'vlog:user_info_edit' %}">Edit information</a></li>
-                 <a href="{% url 'vlog:change_password' %}">Change password</a></li>
+{#                <p style="font-size: 25px;padding-bottom: 20px;">#}
+{#                 <a href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;">Edit information</a></li>#}
+{#                </p>#}
+                <p style="font-size: 25px;padding-bottom: 20px;">
+                 <a href="{% url 'vlog:change_password' %}" style="color: blue;text-decoration: underline;">Change password</a></li>
+                </p>
             </form>
 
         </div>
@@ -41,7 +45,7 @@
                    onclick="editInfo(this)">EDIT</a>
             </p>
             <p style="font-size: 25px;padding-bottom: 20px;">
-                <a id="introduction-a" href="javascript:void(0);"
+                <a id="introduction-a" href="{% url 'vlog:user_info_edit' %}"
                    style="color: blue;text-decoration: underline;" onclick="editInfo(this);">EDIT</a>
             </p>
             <p style="font-size: 25px;padding-bottom: 20px;">
