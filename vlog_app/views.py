@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from datetime import datetime
+from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 
@@ -162,10 +162,13 @@ def video_list_result(request, tag_id):
 
 def video_detail(request, video_id):
     video_detail = Video.objects.filter(id = video_id)
+    user =request.user
     video = Video.objects.get(id = video_id)
     video.increase_views()
     print(video.views)
-    return render(request, 'video_detail.html', {'video': video_detail})
+    if user is not None:
+        is_star = video.likes.filter(id = user.id).first()
+    return render(request, 'video_detail.html', {'video': video_detail,'is_star':is_star})
 
 
 def video_search(request):
@@ -182,7 +185,27 @@ def video_search(request):
     return render(request,'video_search.html',{'video_list':video_list})
 
 
+@login_required
+def video_star(request,video_id):
+    """
+    For User Star Video
+    """
+    video = Video.objects.get(id = video_id)
+    user = request.user
+    video.likes.add(user)
+    video.save()
+    return redirect(reverse('vlog:video_detail',args=(video_id)))
 
+
+def video_destar(request,video_id):
+    """
+    For User Cancel Star Video
+    """
+    video = Video.objects.get(id = video_id)
+    user = request.user
+    video.likes.remove(user)
+    video.save()
+    return redirect(reverse('vlog:video_detail',args=(video_id)))
 
 """
 
@@ -196,8 +219,6 @@ def admin_info(request):
     admin = {'username': 'Tom Smith', 'introduction': 'A user from world.', 'date': '1999-01-01',
              'email': 'xjjiofjiosjfiosjaio@email.com', 'password': 'xxxxxxxxxxxxxxxxx'}
     return render(request, 'admin_info.html', {'admin': admin})
-
-
 
 
 def user_manage(request):

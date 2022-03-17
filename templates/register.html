@@ -32,39 +32,49 @@
                 <!-- todo: complete user register! -->
                 <form id="user_form" action="#" method="post">
                     {% csrf_token %}
+{#                    <div class="input-group">#}
+{#                        <span><i class="fas fa-user" aria-hidden="true"></i></span>#}
+{#                         {{user_form.as_p}}#}
+{#                         {{user_form.erros}}#}
+{#                    </div>#}
                     <div class="input-group">
                         <span><i class="fas fa-user" aria-hidden="true"></i></span>
                          {{user_form.username}}
+
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
                         {{user_form.password}}
+
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
                         {{user_form.password1}}
+
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
                         {{user_form.email}}
+
                     </div>
                     <div class="input-group">
                         <span style="color: gray;">Date of Birth: </span>
                         {{profile_form.dob}}
                     </div>
                     <button class="btn btn-primary btn-block" type="submit">Register</button>
+                    {% include "base_formerrors.html" %}
                 </form>
                 <p class="account">Already have an account? <a href="/">Sign in</a></p>
+
             </div>
         </div>
-        <!-- //main content -->
     </div>
-    <!-- //container -->
-    <!-- footer -->
     <div class="footer">
         <!-- <p>&copy; 2022 Play Sign In form. All Rights Reserved | Design by <a href="#" target="blank">W3layouts</a></p> -->
     </div>
-    <!-- footer -->
 </div>
 </body>
+
+
+
 </html>

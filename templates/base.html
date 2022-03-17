@@ -35,13 +35,6 @@
                     <input type="text"  name="search" placeholder="Search your favourite video" class="layui-input" lay-verify="title" autocomplete="off">
                     <button class="btn btn-default" type="submit"></button>
                     </form>
-
-{#                    <div class="layui-input-inline" style="width: 900px;">#}
-{#                        <input type="text" name="title" lay-verify="title" autocomplete="off"#}
-{#                               placeholder="Search your favourite video"#}
-{#                               class="layui-input">#}
-{#                    </div>#}
-
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
@@ -49,18 +42,23 @@
                     <a href="/user_info/">
                         {% load static %}
                         <img src="{% static 'images/user.png' %}" class="layui-nav-img"
-                             style="background-color: white;">user
-                                    <ul>
-            {% if user.is_authenticated %}
-            {{ user.username }}
-            {% else %}
-            user
-            {% endif %}
+                             style="background-color: white;">
+                        {% if user.id %}
+                        {{ user.username }}
+                        {% else %}
+                        login
+                        {% endif %}
+            <ul>
             </ul>
                     </a>
                     <dl class="layui-nav-child">
+                        {% if user.id %}
                         <dd><a href="/user_info/">Your Profile</a></dd>
                         <dd><a href="{% url 'vlog:logout' %}">Sign out</a></dd>
+                        {% else %}
+                        <dd><a href="{% url 'vlog:login' %}">Login</a></dd>
+                        <dd><a href="{% url 'vlog:register' %}">Create account</a></dd>
+                        {% endif %}
                     </dl>
                 </li>
 {#                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>#}

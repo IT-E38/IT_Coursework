@@ -39,7 +39,21 @@ class UserRegisterForm(forms.ModelForm):
         model = User
         fields = ('username', 'password', 'email', )
 
-    error_messages = {'password_mismatch': '两次密码不一致', }
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        return password
+
+    def clean_password1(self):
+        password = self.cleaned_data.get("password")
+        password1 = self.cleaned_data.get("password1")
+
+        if password and password1 and password != password1:
+            raise forms.ValidationError("Two password mismatch.")
+        return password1
 
 
 class UserProfileForm(forms.ModelForm):
