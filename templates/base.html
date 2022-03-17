@@ -29,12 +29,18 @@
                 </li>
 
                 <li class="layui-nav-item" style="margin-left: 100px;float: left">
-                    <i class="layui-icon layui-icon-search" style="font-size: 20px; color: white;"></i>
-                    <div class="layui-input-inline" style="width: 900px;">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off"
-                               placeholder="Search your favourite video"
-                               class="layui-input">
-                    </div>
+{#                    <i class="layui-icon layui-icon-search" style="font-size: 20px; color: white;"></i>#}
+                     <form class="layui-input-inline" action="{% url 'vlog:video_search' %}" method='post' style="width: 500px;" line-height="100px">
+                    {% csrf_token %}
+                    <input type="text"  name="search" placeholder="Search your favourite video" class="layui-input" lay-verify="title" autocomplete="off">
+                    <button class="btn btn-default" type="submit"></button>
+                    </form>
+
+{#                    <div class="layui-input-inline" style="width: 900px;">#}
+{#                        <input type="text" name="title" lay-verify="title" autocomplete="off"#}
+{#                               placeholder="Search your favourite video"#}
+{#                               class="layui-input">#}
+{#                    </div>#}
 
                 </li>
             </ul>

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 from django.contrib.auth.hashers import check_password
+from django.db.models import Q
 
 from vlog_app.models import Tag,Video,UserProfile,User
 from vlog_app.forms import *
@@ -162,6 +163,22 @@ def video_list_result(request, tag_id):
 def video_detail(request, video_id):
     video = Video.objects.filter(id = video_id)
     return render(request, 'video_detail.html', {'video': video})
+
+
+def video_search(request):
+    """
+    For Video Search
+    """
+    if request.method == 'POST':
+        search = request.POST["search"]
+        request.session["search"] = search
+    else:
+        search = request.session.get("search")
+    video_list = Video.objects.filter(
+        Q(title__icontains=search) | Q(description__icontains=search) )
+    return render(request,'video_search.html',{'video_list':video_list})
+
+
 
 
 """

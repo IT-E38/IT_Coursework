@@ -15,6 +15,7 @@ urlpatterns = [
     path('admin_info/', views.admin_info),
     path('home/', views.home,name = 'home'),
     path('video_list/<tag_id>/', views.video_list_result, name='video_list'),
+    path('video_search/', views.video_search,name = 'video_search'),
     path('video_detail/<video_id>/', views.video_detail),
     path('user_manage/', views.user_manage),
     path('user_manage/<id_or_name>/', views.user_manage_query, name='user_manage'),

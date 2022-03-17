@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title_block %}Video list Page{% endblock %}
+{% block title_block %}Video Search list Result Page{% endblock %}
 {% block content_block %}
     <div id="container" style="margin: 10px 15px 15px 15px;padding: 15px;">
     {% if video_list %}
@@ -22,7 +22,7 @@
         {% endfor %}
     {% else %}
          <p style="font-weight: bold;font-size: 30px;padding-bottom: 20px;">
-                   Sorry, no videos are available under this category at the moment.
+                   Sorry, we couldn't find any related videos
          </p>
     {% endif %}
     </div>
