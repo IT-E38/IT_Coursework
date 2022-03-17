@@ -150,7 +150,7 @@ Video module
 
 
 def home(request):
-    all_videos =  Video.objects.all
+    all_videos =  Video.objects.order_by('-views')
     user = request.user
     return render(request, 'home.html', {'all_videos': all_videos,'user':user})
 
@@ -161,8 +161,11 @@ def video_list_result(request, tag_id):
 
 
 def video_detail(request, video_id):
-    video = Video.objects.filter(id = video_id)
-    return render(request, 'video_detail.html', {'video': video})
+    video_detail = Video.objects.filter(id = video_id)
+    video = Video.objects.get(id = video_id)
+    video.increase_views()
+    print(video.views)
+    return render(request, 'video_detail.html', {'video': video_detail})
 
 
 def video_search(request):

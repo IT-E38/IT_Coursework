@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(blank=True)
-    dob = models.DateTimeField()
+    dob = models.DateField()
     description = models.CharField(max_length=255, blank=True,null=True)
 
     def __str__(self):
@@ -35,9 +35,15 @@ class Video(models.Model):
     picture = models.ImageField(upload_to="video_picture/")
     release_date = models.DateTimeField(auto_now_add=True, blank=True, max_length=20)
 
-    def increase_view_count(self):
+
+    def __str__(self):
+        return self.title
+
+
+    def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
+
 
 # class Manager(models.Model):
 #     manager = models.OneToOneField(User, on_delete=models.CASCADE)
