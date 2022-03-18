@@ -12,7 +12,7 @@
                 </a>
                 <!-- todo: Replace the value in the following p label with the corresponding value in video_obj. -->
                 <p style="font-weight: bold">{{ video.title}} &nbsp; {{ video.views}}views</p>
-                <p>{{ video.description}}</p>
+                <p>{{ video.description|slice:":110"}}......</p>
             </div>
         {% endfor %}
     </div>

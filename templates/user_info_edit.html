@@ -10,10 +10,8 @@
 
             <form id="form" method="post" action="">
                 {% csrf_token %}
-
-
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    User Introduction: {{ form.description }}
+                    User Introduction:{{ form.description }}
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
                     Date of Birth:{{ form.dob }}

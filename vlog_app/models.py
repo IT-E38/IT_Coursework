@@ -27,7 +27,7 @@ class Tag(models.Model):
 class Video(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=255,blank=True,null=True)
-    length = models.TimeField()
+    length = models.TimeField(null = True)
     views = models.IntegerField(default=0,blank=True)
     # likes = models.IntegerField(default=0)
     likes = models.ManyToManyField(User,blank=True)

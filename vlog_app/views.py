@@ -6,10 +6,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
+from django_pages_project import settings
 
 from vlog_app.models import Tag,Video,UserProfile,User
 from vlog_app.forms import *
-from django_pages_project import settings
+
 
 
 """
@@ -96,7 +97,7 @@ def user_info_edit(request):
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
     if request.method == 'POST':
-        form = ProfileEditForm(request.POST)
+        form = ProfileEditForm(request.POST,instance=user_profile)
 
         if form.is_valid():
             user_profile.dob = form.cleaned_data['dob']
@@ -109,8 +110,8 @@ def user_info_edit(request):
         else:
             print(form.errors)
     else:
-        form = ProfileEditForm(request.POST)
-    return render(request, 'user_info_edit.html', {'form': form})
+        form = ProfileEditForm(request.POST,instance=user_profile)
+    return render(request, 'user_info_edit.html', {'form': form,'user_profile':user_profile})
 
 
 @login_required
