@@ -11,3 +11,6 @@
    1. Run vlog_app/populate_vlog_app.py
 5. TestUnit
    1. Run vlog_app/test.py 
+6. Web site map
+   1. /home/  home
+   2. /admin/ admin system
