@@ -136,6 +136,16 @@ def change_password(request):
     return render(request, 'change_password.html', {'form': form,'user':user})
 
 
+@login_required
+def user_comment(request):
+    """
+    For User Star Video list display
+    """
+    user = request.user
+    comment_list = user.comment_set.all()
+    return render(request, 'user_comment.html',{'user': user, 'comment_list': comment_list})
+
+
 
 """
 
