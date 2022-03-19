@@ -1,4 +1,5 @@
 # IT_Coursework
+We are the team E38
 ##  How To Run Project
 1. PIP Requirement 
 2. Configure Database(We use SQLITE3)
@@ -14,3 +15,5 @@
 6. Web site map
    1. /home/  home
    2. /admin/ admin system
+7. Pythonanywhere
+   1. Try our app ->https://sph199712.pythonanywhere.com/
