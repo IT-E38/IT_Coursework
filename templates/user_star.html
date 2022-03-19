@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
-{% block title_block %}Video Search list Result Page{% endblock %}
+{% block title_block %}User Star List{% endblock %}
 {% block content_block %}
     <div id="container" style="margin: 10px 15px 15px 15px;padding: 15px;">
     {% if video_list %}
+         <p style="font-weight: bold;font-size: 30px;padding-bottom: 20px;">
+         Here are your favourite videos:
+         </p>
          {% include "base_videolist.html" %}
     {% else %}
          <p style="font-weight: bold;font-size: 30px;padding-bottom: 20px;">
-                   Sorry, we couldn't find any related videos
+                   You haven't liked any videos yet, <a href="{% url 'vlog:home' %}" style="color:blue">Go to pick a  video </a>
          </p>
     {% endif %}
     </div>

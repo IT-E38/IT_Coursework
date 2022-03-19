@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
-from django.db.models import Q
+from django.db.models import Q,Count
 from django_pages_project import settings
 
-from vlog_app.models import Tag,Video,UserProfile,User
+from vlog_app.models import Tag,Video,UserProfile,User,Comment
 from vlog_app.forms import *
 
 
@@ -25,11 +25,11 @@ def register(request):
     For User Register
     """
     if request.method == 'POST':
-        user_form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
             user.set_password(user.password)
             user.save()
             profile = profile_form.save(commit=False)
@@ -37,11 +37,11 @@ def register(request):
             profile.save()
             return redirect(reverse('vlog:login'))
         else:
-            print(user_form.errors)
+            print(form.errors)
     else:
-        user_form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.POST)
         profile_form = UserProfileForm(request.POST)
-    return render(request, 'register.html', {'user_form':user_form,
+    return render(request, 'register.html', {'form':form,
                                             'profile_form':profile_form,})
 
 
@@ -52,11 +52,6 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = User.objects.get(username = username)
-        pwd = user.password
-        print(user.username,pwd)
-        print(password)
-        print(bool(check_password(password,pwd)))
         user = authenticate(username = username,password = password)
         if user is not None:
             if user.is_active:
@@ -65,9 +60,7 @@ def user_login(request):
             else:
                 return HttpResponse('Your VlogWeb account is disabled')
         else:
-            print(user)
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            return HttpResponse('Your Vlogweb account username or password is incorrect')
     else:
         return render(request, 'index.html')
 
@@ -84,9 +77,11 @@ def user_info(request):
     For User information display
     """
     user = request.user
+    if user.is_superuser:
+        return render(request, 'user_info.html', {'user': user, })
     user_profile = UserProfile.objects.get(user = user)
-    print(user_profile.dob)
-    return render(request, 'user_info.html', {'user': user,'user_profile':user_profile})
+    user_starlist = user.video_set.all()
+    return render(request, 'user_info.html', {'user': user,'user_profile':user_profile,'user_starlist':user_starlist})
 
 
 @login_required
@@ -142,7 +137,6 @@ def change_password(request):
 
 
 
-
 """
 
 Video module
@@ -166,10 +160,29 @@ def video_detail(request, video_id):
     user =request.user
     video = Video.objects.get(id = video_id)
     video.increase_views()
+    comment = video.comment_set.order_by("-create_time")
     print(video.views)
     if user is not None:
         is_star = video.likes.filter(id = user.id).first()
-    return render(request, 'video_detail.html', {'video': video_detail,'is_star':is_star})
+    return render(request, 'video_detail.html', {'video': video_detail,'is_star':is_star,'comment':comment})
+
+
+def video_moststar_list(request):
+    all_videos = Video.objects.all().annotate(liker=Count('likes')).order_by('-liker')[:10]
+    user = request.user
+    print(all_videos)
+    return render(request, 'video_moststar_list.html', {'all_videos': all_videos, 'user': user,})
+
+
+@login_required
+def user_star(request):
+    """
+    For User Star Video list display
+    """
+    user = request.user
+    video_list = user.video_set.all().order_by('-views')
+    print(video_list)
+    return render(request, 'user_star.html',{'user': user, 'video_list': video_list})
 
 
 def video_search(request):
@@ -198,6 +211,7 @@ def video_star(request,video_id):
     return redirect(reverse('vlog:video_detail',args=(video_id)))
 
 
+@login_required
 def video_destar(request,video_id):
     """
     For User Cancel Star Video
@@ -206,5 +220,17 @@ def video_destar(request,video_id):
     user = request.user
     video.likes.remove(user)
     video.save()
+    return redirect(reverse('vlog:video_detail',args=(video_id)))
+
+
+@login_required
+def video_comment(request,video_id):
+    """
+    For User Star Video
+    """
+    video = Video.objects.get(id = video_id)
+    user = request.user
+    content = request.POST.get('comment')
+    Comment.objects.create(user=user,video=video,content=content)
     return redirect(reverse('vlog:video_detail',args=(video_id)))
 

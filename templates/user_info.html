@@ -7,80 +7,39 @@
              style="font-size: 200px; color: white;background-color: lightgray;float: left;margin-right: 90px;"
              alt="user-image"/>
         <div style="float: left">
-            <!-- todo: Replace the following information with the corresponding data information of the currently logged in user. -->
-
             <form id="form" method="post" action="/update_user/">
                 {% csrf_token %}
                 <!-- todo: Replace the value in the following p label with the corresponding value in user. -->
                 <p style="font-weight: bold;font-size: 30px;padding-bottom: 20px;">
-                    USERNAME: <input id="username" name="username" value="{{ user.username }}" style="border: none;"
-                                     disabled>
+                    USERNAME: {{ user.username }}
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    User Introduction: <input id="introduction" name="introduction" value="{{ user_profile.description }}"
-                                              style="border: none;"
-                                              disabled>
+                    User Introduction: {{ user_profile.description }}
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
                     Date of Birth:
                     {{ user_profile.dob }}
                 </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
-                    Email: <input id="email" name="email" value="{{ user.email }}" style="border: none;" disabled>
+                    Email: {{ user.email }}
                 </p>
                 <input id="submit" type="submit" hidden>
-{#                <p style="font-size: 25px;padding-bottom: 20px;">#}
-{#                 <a href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;">Edit information</a></li>#}
-{#                </p>#}
-            </form>
-
-        </div>
-        <div style="margin-right: 160px;float: right;padding-bottom: 20px;">
-            <p style="font-size: 25px;padding-bottom: 20px;">
-                 <a href="{% url 'vlog:change_password' %}" style="color: blue;text-decoration: underline;">Change Password</a></li>
+                <p style="font-size: 15px;padding-bottom: 20px;">
+                 <a href="{% url 'vlog:user_info_edit' %}" style="color: green;text-decoration: underline;">Edit My information</a></li>
+                </p>
+                 <p style="font-size: 15px;padding-bottom: 20px;">
+                 <a href="{% url 'vlog:change_password' %}" style="color: green;text-decoration: underline;">Change Password</a></li>
            </p>
-            <p style="font-size: 25px;padding-bottom: 20px;">
-                <a href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;"
-                   onclick="editInfo(this)">EDIT</a>
-            </p>
-            <p style="font-size: 25px;padding-bottom: 20px;">
-                <a href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;"
-                   onclick="editInfo(this)">EDIT</a>
-            </p>
-            <p style="font-size: 25px;padding-bottom: 20px;">
-                <a href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;"
-                   onclick="editInfo(this)">EDIT</a>
-            </p>
+            </form>
         </div>
     </div><br><br>
-
     <hr style="border: 10px solid;background-color: lightgray;height: 2px;margin-top: 50px;">
-    <div id="container" style="margin: 60px;">
+    <div id="container" style="margin: 50px;">
         <div style="float: left">
-            <!-- todo: Replace the following information with the corresponding data information of the currently logged in user. -->
-
-            <form id="form" method="post" action="/update_user/">
                 <p style="font-weight: bold;font-size: 30px;padding-bottom: 20px;">
-                    <a id="username-a" href="{% url 'vlog:user_info_edit' %}" style="color: blue;"
-                   onclick="editInfo(this)">My Favourite Videos</a>
+                    <a  href="{% url 'vlog:user_star' %}" style="color: blue;"
+                   >My Favourite Videos</a>
                 </p>
-{#                <p style="font-size: 25px;padding-bottom: 20px;">#}
-{#                    User Introduction: <input id="introduction" name="introduction" value="{{ user_profile.description }}"#}
-{#                                              style="border: none;"#}
-{#                                              disabled>#}
-{#                </p>#}
-{#                <p style="font-size: 25px;padding-bottom: 20px;">#}
-{#                    Date of Birth:#}
-{#                    {{ user_profile.dob }}#}
-{#                </p>#}
-{#                <p style="font-size: 25px;padding-bottom: 20px;">#}
-{#                    Email: <input id="email" name="email" value="{{ user.email }}" style="border: none;" disabled>#}
-{#                </p>#}
-                <input id="submit" type="submit" hidden>
-{#                <p style="font-size: 25px;padding-bottom: 20px;">#}
-{#                 <a href="{% url 'vlog:user_info_edit' %}" style="color: blue;text-decoration: underline;">Edit information</a></li>#}
-{#                </p>#}
-            </form>
 
         </div>
 

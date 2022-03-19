@@ -28,12 +28,7 @@ class UserRegisterForm(forms.ModelForm):
                                 },
                                 widget = forms.PasswordInput(attrs={'placeholder': 'Repeat Password'})
                                 )
-    email = forms.EmailField(required=False,
-                             error_messages={
-                                 'invalid': 'please enter the valid mail address',
-                             },
-                             widget = forms.EmailInput(attrs={'placeholder': 'Email address'})
-                             )
+
 
     class Meta:
         model = User
@@ -59,9 +54,15 @@ class UserRegisterForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     dob = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date'})
                           )
+    email = forms.EmailField(required=False,
+                             error_messages={
+                                 'invalid': 'please enter the valid mail address',
+                             },
+                             widget = forms.EmailInput(attrs={'placeholder': 'Email address'})
+                             )
     class Meta:
         model = UserProfile
-        fields = ('dob',)
+        fields = ('dob','email')
 
 class ProfileEditForm(forms.ModelForm):
     # nickname = forms.CharField(min_length=1,max_length=20,required=False,
@@ -106,6 +107,7 @@ class PasswordEditForm(forms.ModelForm):
                                 },
                                 widget = forms.PasswordInput(attrs={'placeholder': 'New Password'})
                                 )
+
 
     class Meta:
         model = User

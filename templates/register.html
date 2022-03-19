@@ -30,31 +30,26 @@
             <div class="w3_info">
                 <h2>Register</h2>
                 <!-- todo: complete user register! -->
-                <form id="user_form" action="#" method="post">
+                <form id="form" action="#" method="post">
                     {% csrf_token %}
-{#                    <div class="input-group">#}
-{#                        <span><i class="fas fa-user" aria-hidden="true"></i></span>#}
-{#                         {{user_form.as_p}}#}
-{#                         {{user_form.erros}}#}
-{#                    </div>#}
                     <div class="input-group">
                         <span><i class="fas fa-user" aria-hidden="true"></i></span>
-                         {{user_form.username}}
+                         {{form.username}}
 
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                        {{user_form.password}}
+                        {{form.password}}
 
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                        {{user_form.password1}}
+                        {{form.password1}}
 
                     </div>
                     <div class="input-group">
                         <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                        {{user_form.email}}
+                        {{profile_form.email}}
 
                     </div>
                     <div class="input-group">

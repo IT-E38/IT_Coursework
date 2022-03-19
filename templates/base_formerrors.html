@@ -1,14 +1,14 @@
 
-{% if user_form.errors  %}
+{% if form.errors  %}
 <div class="ui info message">
     <ul class="list">
 
-        {% for field in user_form %}
+        {% for field in form %}
         {% for error in field.errors %}
         <li class="item">{{ error|escape }}</li>
         {% endfor %}
         {% endfor %}
-        {% for error in user_form.non_field_errors %}
+        {% for error in form.non_field_errors %}
         <li class="item">{{ error|escape }}</li>
         {% endfor %}
     </ul>

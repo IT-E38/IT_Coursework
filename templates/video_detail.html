@@ -3,7 +3,6 @@
 {% block content_block %}
     <div id="container" style="margin: 5px 15px 15px 15px;padding: 15px;">
         <div style="width: 1060px; height: 500px;float: left;margin: 10px 10px 20px 10px;text-align: left">
-            <!-- todo: Replace src to video_obj.url -->
             {% for video in video %}
             <video src="{{video.file.url}}"
                    style="width: 100%;height: 100%;border-radius: 5px;transform: none;" controls></video>
@@ -12,37 +11,39 @@
             {% if is_star %}
                  <a href="{% url 'vlog:video_destar' video.id %}">
                  <img src="{% static 'images/liked.png' %}" id="like" style="width: 35px;height: 35px;float: left;"
-                     alt="liked-icon">
+                      alt="liked-icon"></a>
 
             {% else %}
                 <a href="{% url 'vlog:video_star' video.id %}">
                 <img src="{% static 'images/like.png' %}" id="like" style="width: 35px;height: 35px;float: left;"
-                     alt="liked-icon">
+                     alt="liked-icon"></a>
 
             {% endif %}
                 <p style="margin: 12px;font-size: 15px;font-weight: bold;">{{ video.likes.count }}</p>
             </div>
             <p style="font-weight: bold;font-size: 20px;margin: 5px;">{{ video.title }}</p>
-            <p style="font-size: 16px;color: gray;margin: 5px;">The video release date:{{ video.release_date }}
+            <p style="font-size: 16px;color: gray;margin: 5px;">The video's release date:{{ video.release_date }}
                 </p>
-            <p style="font-size: 16px;color: black;margin: 5px;">{{ video.description }}1234</p>
+            <p style="font-size: 16px;color: black;margin: 5px;">Author Says:{{ video.description }}</p>
+
+                <div style="float: left">
+            <form id="form"  action="{% url 'vlog:video_comment' video.id %}" method="post">
+                {% csrf_token %}
+                </p>
+                 <p><textarea placeholder="Add a comment here" class="form-control" name="comment" style="height: 50px;width: 500px"></textarea>
+                 <input id="submit" type="submit" ></p>
+            </form>
             {% endfor %}
+            {% for i in comment %}
+                    <blockquote>
+                        <p style="font-weight: bold;font-size: 15px;margin: 5px;color: #009f95">{{ i.user.username }}  Says:</p>
+                        <p>{{ i.content }}
+                        </p >
+                        <small style="color: gray;">{{ i.create_time }}----------------------------------
+                        </small>
+                    </blockquote>
+                {% endfor %}
+        </div>
         </div>
     </div>
 {% endblock %}
-{#{% block script_block %}#}
-{#    <script>#}
-{#        $(function () {#}
-{#            let imgDom = $('#like');#}
-{#            imgDom.click(function () {#}
-{#                if (imgDom[0].src.search('liked') !== -1) {#}
-{#                    imgDom.attr('src', `{% static 'images/like.png' %}`);#}
-{#                } else {#}
-{#                    imgDom.attr('src', `{% static 'images/liked.png' %}`);#}
-{#                }#}
-{#                // todo: Update the number of likes of this video, and then return to the corresponding value of refresh.#}
-{#                // ....#}
-{#            });#}
-{#        });#}
-{#    </script>#}
-{#{% endblock %}#}

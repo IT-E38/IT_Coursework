@@ -36,18 +36,21 @@ class Video(models.Model):
     picture = models.ImageField(upload_to="video_picture/")
     release_date = models.DateTimeField(auto_now_add=True, blank=True, max_length=20)
 
-
     def __str__(self):
         return self.title
-
 
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
 
 
-# class Manager(models.Model):
-#     manager = models.OneToOneField(User, on_delete=models.CASCADE)
-#     email = models.EmailField(blank=True)
-#     dob = models.DateField()
-#     description = models.CharField(max_length=255, blank=True)
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.CharField(max_length=128)
+    create_time = models.DateTimeField(auto_now_add=True)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
+
+

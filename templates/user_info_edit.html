@@ -4,12 +4,11 @@
     <div id="container" style="margin: 60px;">
         {% load static %}
         <div style="float: left">
-
-
-
-
             <form id="form" method="post" action="">
                 {% csrf_token %}
+                 <p style="font-size: 25px;padding-bottom: 20px;">
+                    Edit Personal Information
+                </p>
                 <p style="font-size: 25px;padding-bottom: 20px;">
                     User Introduction:{{ form.description }}
                 </p>
@@ -20,6 +19,7 @@
                     Email:{{ form.email }}
                 </p>
                 <input id="submit" type="submit" >
+            {% include "base_formerrors.html" %}
             </form>
 
         </div>

@@ -24,12 +24,12 @@ SECRET_KEY = 'bxcp-d4(6@%^t&gxg^w)i)v@j8r7-z6d*=vle_&-ye*1*rhtbm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sph199712.pythonanywhere.com','127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
-    #'simpleui',
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
