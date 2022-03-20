@@ -14,11 +14,6 @@ class UserProfile(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    # slug = models.SlugField(blank=True)
-    #
-    # def save(self, *args, **kwargs):
-    #     self.slug = slugify(self.name)
-    #     super(Tag, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -29,7 +24,6 @@ class Video(models.Model):
     description = models.CharField(max_length=255,blank=True,null=True)
     length = models.TimeField(null = True)
     views = models.IntegerField(default=0,blank=True)
-    # likes = models.IntegerField(default=0)
     likes = models.ManyToManyField(User,blank=True)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     file = models.FileField(upload_to='video/',null=True)

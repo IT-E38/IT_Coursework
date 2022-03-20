@@ -34,12 +34,12 @@
                  <input id="submit" type="submit" ></p>
             </form>
             {% endfor %}
-            {% for i in comment %}
+            {% for comment in comment %}
                     <blockquote>
-                        <p style="font-weight: bold;font-size: 15px;margin: 5px;color: #009f95">{{ i.user.username }}  Says:</p>
-                        <p>{{ i.content }}
+                        <p style="font-weight: bold;font-size: 15px;margin: 5px;color: #009f95">{{ comment.user.username }}  Says:</p>
+                        <p>{{ comment.content }}
                         </p >
-                        <small style="color: gray;">{{ i.create_time }}----------------------------------
+                        <small style="color: gray;">{{ comment.create_time }}----------------------------------
                         </small>
                     </blockquote>
                 {% endfor %}

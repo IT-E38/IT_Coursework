@@ -9,9 +9,9 @@ We are the team E38
 3. Generate Admin User
    1. Use command: python manage.py createsuperuser
 4. Populate Test Data
-   1. Run vlog_app/populate_vlog_app.py
+   1. Use command: population_script.py
 5. TestUnit
-   1. Run vlog_app/test.py 
+   1. Run test.py 
 6. Web site map
    1. /home/  home
    2. /admin/ admin system

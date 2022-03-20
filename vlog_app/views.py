@@ -12,7 +12,6 @@ from vlog_app.models import Tag,Video,UserProfile,User,Comment
 from vlog_app.forms import *
 
 
-
 """
 
 User Module
@@ -58,9 +57,9 @@ def user_login(request):
                 login(request,user)
                 return redirect(reverse('vlog:home'))
             else:
-                return HttpResponse('Your VlogWeb account is disabled')
+                return HttpResponse('Your SuperVlog account is disabled')
         else:
-            return HttpResponse('Your Vlogweb account username or password is incorrect')
+            return HttpResponse('Your SuperVlog account username or password is incorrect')
     else:
         return render(request, 'index.html')
 
@@ -166,6 +165,9 @@ def video_list_result(request, tag_id):
 
 
 def video_detail(request, video_id):
+    """
+    For Video detail information display
+    """
     video_detail = Video.objects.filter(id = video_id)
     user =request.user
     video = Video.objects.get(id = video_id)
@@ -178,6 +180,9 @@ def video_detail(request, video_id):
 
 
 def video_moststar_list(request):
+    """
+    For Most Liked Video list display
+    """
     all_videos = Video.objects.all().annotate(liker=Count('likes')).order_by('-liker')[:10]
     user = request.user
     print(all_videos)

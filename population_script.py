@@ -19,7 +19,7 @@ def populate():
          "file": "video/video2.mov", "picture": "video_picture/testimg1.jpg", },
         {"title": "STUDY WITH ME IN SHIBUYA", "description": "Study with me ", "length": "01:56:53", "views": 50, "tag": "Study",
          "file": "video/video1.mp4", "picture": "video_picture/testimg2.jpg", },
-        {"title": "FIGURING OUT MY LIFE", "description": "Share My Daily Life", "length": "00:04:07", "views": 40, "tag": "Study",
+        {"title": "FIGURING OUT MY LIFE", "description": "Share My Daily Life", "length": "00:04:07", "views": 40, "tag": "DailyLife",
          "file": "video/video1.mp4", "picture": "video_picture/testimg3.jpg", },
         {"title": "LEARN HOW TO SPEECH", "description": "Learn how to make a conversation with others", "length": "00:12:58", "views": 30, "tag": "Study",
          "file": "video/video1.mp4", "picture": "video_picture/testimg4.jpg", },
@@ -66,6 +66,6 @@ def add_video(title, description, length, views, tag, file, picture):
 
 
 if __name__ == '__main__':
-    print('Starting vlog_app population script...')
+    print('Start vlog_app population script...')
     populate()
     print('Populate Successful')

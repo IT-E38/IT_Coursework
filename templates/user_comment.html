@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title_block %}User Star List{% endblock %}
+{% block title_block %}User Comment List{% endblock %}
 {% block content_block %}
     <div id="container" style="margin: 10px 15px 15px 15px;padding: 15px;">
     {% if comment_list %}
@@ -17,7 +17,7 @@
                 {% for comment in comment_list %}
                 <tr>
 
-                        <td> <a href="/video_detail/{{ comment.video.id }}/" style="color: blue">{{ comment.video.title }}.......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td> <a href="/video_detail/{{ comment.video.id }}/" style="color: blue">{{ comment.video.title }}</a>.......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ comment.content }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td>{{ comment.create_time }}</td>
                 </tr>
